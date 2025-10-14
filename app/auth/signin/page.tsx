@@ -1,10 +1,9 @@
-// app/auth/signin/page.tsx - UPDATED VERSION
+// app/auth/signin/page.tsx
 "use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Toaster, toast } from "sonner"; // Import Sonner
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,10 +17,7 @@ export default function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLoading) return;
     setIsLoading(true);
-
-    const tid = toast.loading("Signing you in..."); // Loading toast
     try {
       const result = await signIn("credentials", {
         email,
@@ -29,18 +25,13 @@ export default function SignIn() {
         redirect: false,
       });
       if (result?.error) {
-        toast.error("Invalid email or password.", { id: tid }); // Error toast
+        alert("Invalid credentials");
       } else {
-        toast.success("Signed in successfully!", { id: tid }); // Success toast
-        // Brief delay to show the success message before redirecting
-        setTimeout(() => {
-          router.push("/dashboard");
-          router.refresh();
-        }, 1500);
+        router.push("/dashboard");
+        router.refresh();
       }
     } catch (err) {
       console.error("Sign in error:", err);
-      toast.error("An unexpected error occurred.", { id: tid }); // Catch-all error toast
     } finally {
       setIsLoading(false);
     }
@@ -48,9 +39,6 @@ export default function SignIn() {
 
   return (
     <div className="relative min-h-screen bg-[#FDECEF] flex items-center justify-center p-4">
-      {/* Add the Toaster component */}
-      <Toaster position="top-center" richColors closeButton theme="light" />
-
       {/* Soft overlay using palette */}
       <div className="pointer-events-none absolute inset-0 opacity-10 bg-gradient-to-br from-[#9D6381] to-[#612940]" />
       <Card className="relative w-full max-w-md bg-[#FDECEF]/20 border border-[#9D6381] shadow-lg">
