@@ -18,8 +18,18 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "/lib"
     ],
+      "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  },
   },
 ];
 
 export default eslintConfig;
+
+// lib/generated/
+// prisma/
+// node_modules/
+// .next/
+
