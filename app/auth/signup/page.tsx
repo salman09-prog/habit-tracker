@@ -1,9 +1,8 @@
-// app/auth/signup/page.tsx - FIXED VERSION
+// app/auth/signup/page.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Toaster, toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,38 +17,21 @@ export default function SignUp() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLoading) return;
     setIsLoading(true);
-
-    const tid = toast.loading("Creating your account...");
     try {
-      const res = await fetch("/api/auth/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
-
-      if (res.ok) {
-        toast.success("Account created successfully! Redirecting to sign in...", { 
-          id: tid,
-          duration: 2000 // Show for 2 seconds before redirecting
-        });
-        
-        // Wait for toast to show before redirecting
-        setTimeout(() => {
-          router.push("/auth/signin");
-        }, 2000);
-        
+      if (response.ok) {
+        router.push("/auth/signin?message=Account created successfully");
       } else {
-        const error = await res.json();
-        toast.error(error.error || "Could not create account. Please try again.", { 
-          id: tid 
-        });
+        const error = await response.json();
+        alert(error.error || "Something went wrong");
       }
-    } catch {
-      toast.error("Something went wrong. Please try again.", { 
-        id: tid 
-      });
+    } catch (err) {
+      alert("Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -57,14 +39,7 @@ export default function SignUp() {
 
   return (
     <div className="relative min-h-screen bg-[#FDECEF] flex items-center justify-center p-4">
-      {/* Sonner Toaster - Add this */}
-      <Toaster 
-        position="top-center" 
-        richColors 
-        closeButton 
-        theme="light"
-      />
-      
+      {/* Soft overlay using palette */}
       <div className="pointer-events-none absolute inset-0 opacity-10 bg-gradient-to-br from-[#9D6381] to-[#612940]" />
       <Card className="relative w-full max-w-md bg-[#FDECEF]/20 border border-[#9D6381] shadow-lg">
         <CardHeader className="text-center">
