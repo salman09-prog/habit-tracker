@@ -123,7 +123,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <MobileOptimizedLayout>
+    // <MobileOptimizedLayout>
       {/* Add Toaster component here */}
       {/* <Toaster position="top-right" richColors closeButton theme="light" /> */}
       
