@@ -11,16 +11,6 @@ import { HabitList } from "@/components/habit-list";
 import { AIHabitInput } from "@/components/ai-habit-input";
 import { AdvancedAnalytics } from "@/components/advanced-analytics";
 import { SocialSharing } from "@/components/social-sharing";
-import { MobileOptimizedLayout } from "@/components/mobile-optimized-layout";
-import { Toaster } from "sonner"; // Import Toaster
-
-interface ParsedHabit {
-  activity: string;
-  quantity: number;
-  unit: string;
-  category: string;
-  confidence: number;
-}
 
 const stats = [
   { icon: Target, label: "Active Streaks", value: "3", change: "+2" },
@@ -89,7 +79,7 @@ export default function DashboardPage() {
   const handleOpenHabitInput = () => setShowHabitInput(true);
   const triggerRefresh = () => setRefreshTrigger((v) => v + 1);
 
-  const handleHabitsCreated = (habits: ParsedHabit[]) => {
+  const handleHabitsCreated = () => {
     setShowHabitInput(false);
     triggerRefresh();
     // Note: The actual success toast is now handled in AIHabitInput component
@@ -123,10 +113,6 @@ export default function DashboardPage() {
   }
 
   return (
-    // <MobileOptimizedLayout>
-      {/* Add Toaster component here */}
-      {/* <Toaster position="top-right" richColors closeButton theme="light" /> */}
-      
       <div className="min-h-screen bg-[#FDECEF] ">
         {/* Animated background overlay */}
         <div className="fixed inset-0 opacity-10 bg-gradient-to-br from-[#9D6381] to-[#612940]" />
@@ -353,6 +339,5 @@ export default function DashboardPage() {
           />
         )}
       </div>
-    </MobileOptimizedLayout>
   );
 }
